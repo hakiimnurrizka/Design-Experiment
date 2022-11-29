@@ -29,13 +29,13 @@ data_des1$response = c(5.33, 6.99,
                        5.13, 6.76,
                        2.79, 2.48)
 data_des1
-#Now lets comute average score for each experiment design
+#Now lets compute average score for each experiment design
 aggregate(response ~ A + B,
           FUN = mean, data = data_des1)
 #If we look at the mean table, we can faintly see a pattern of effect where high value of
 #factor A yields high value of response while the factor B seems to have the opposite effect.
 #Now lets test the factor significance with ANOVA table
-#Get restuls
+#Get results
 fac_mod1 = lm(response ~ A + B + A*B, data = data_des1)
 summary(aov(fac_mod1))
 #Turns out the interaction term is not significance, lets remove it from the model
@@ -67,7 +67,7 @@ fac_mod2 = lm(response ~ A * B * C, data = data_des2)
 summary(aov(fac_mod2))
 #Based on the above table, we got one interaction term significant and 2 individual factor
 #are also significant, thus we simplify using linear model selection rule
-fac_mod2 = lm(response ~ A + B + C + A:B + A:C + B:C, data = data_des2)#Remove threeway interaction
+fac_mod2 = lm(response ~ A + B + C + A:B + A:C + B:C, data = data_des2)#Remove three way interaction
 summary(aov(fac_mod2))
 #Since interaction A:B is still not significant, removal is needed
 fac_mod2 = lm(response ~ A + B + C + A:C + B:C, data = data_des2)
@@ -89,12 +89,12 @@ abline(h = coef(fac_mod2)[1])
 #Factor B
 plot(c(-1,1), ylim = range(1:10),
      coef(fac_mod2)[1] + c(-1,1) * coef(fac_mod2)[3],
-     type = "b", pch = 16, ylab = "Response outcome",  xlab = "Factor A value")
+     type = "b", pch = 16, ylab = "Response outcome",  xlab = "Factor B value")
 abline(h = coef(fac_mod2)[1])
 #Factor C
 plot(c(-1,1), ylim = range(1:10),
      coef(fac_mod2)[1] + c(-1,1) * coef(fac_mod2)[4],
-     type = "b", pch = 16, ylab = "Response outcome",  xlab = "Factor A value")
+     type = "b", pch = 16, ylab = "Response outcome",  xlab = "Factor C value")
 abline(h = coef(fac_mod2)[1])
 #Individual factor in a comparison plots
 comparative1 = data.frame(Factor = rep(c("A","B", "C"),each = 2),
